@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site.js';
+---
+<BaseLayout title="About – Arizona Paycheck Calculator" description="About the Arizona Paycheck Calculator, what it does and how it keeps its tax data current." path="/about/" crumbs={[{ name: 'About', href: '/about/' }]}>
+  <article class="content">
+    <h1>About</h1>
+    <p>Arizona Paycheck Calculator is a free tool that estimates take-home pay for people who work in Arizona. It follows the IRS percentage method for federal withholding and Arizona Form A-4 rules for state withholding.</p>
+    <p>The tax figures live in one data file per tax year, so they can be reviewed and updated when the IRS or the Arizona Department of Revenue publishes changes. The <a href="/methodology/">methodology page</a> lists the formulas, assumptions and sources.</p>
+    <p>This site is independent. It is not affiliated with the IRS, the Arizona Department of Revenue or any employer or payroll company.</p>
+    {SITE.ownerName && <p>Published by {SITE.ownerName}.</p>}
+  </article>
+</BaseLayout>

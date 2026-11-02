@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site.js';
+---
+<BaseLayout title="Disclaimer – Arizona Paycheck Calculator" description="Results are estimates, not tax, legal or payroll advice." path="/disclaimer/" crumbs={[{ name: 'Disclaimer', href: '/disclaimer/' }]}>
+  <article class="content">
+    <h1>Disclaimer</h1>
+    <p>Arizona Paycheck Calculator provides estimates only. It is not tax, legal, accounting or payroll advice, and it is not affiliated with the IRS, the Arizona Department of Revenue or any employer.</p>
+    <p>Actual withholding depends on your employer's payroll system, your Form W-4 and Form A-4, benefits, bonuses and other factors. Tax rules change. Always check your pay stub and consult a qualified tax professional or the relevant government agency for advice about your situation.</p>
+    <p>Rules used: see the <a href="/methodology/">methodology page</a>.</p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { SITE } from '../../config/site.js';
+import { TAX } from '../../config/tax.js';
+const path = '/guides/arizona-form-a-4-withholding/';
+const article = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Arizona Form A-4: How to Choose Your Withholding Rate',
+  mainEntityOfPage: SITE.url + path,
+  dateModified: SITE.taxDataReviewed,
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+};
+---
+<BaseLayout
+  title="Arizona Form A-4 Withholding: How to Pick Your Rate"
+  description="Learn how Arizona Form A-4 sets your state tax withholding, what the default rate is, and how to choose a rate so you do not owe at tax time."
+  path={path} type="article" schema={[article]}
+  crumbs={[{ name: 'Form A-4 Withholding', href: path }]}
+>
+  <article class="content">
+    <h1>Arizona Form A-4: How to Choose Your Withholding Rate</h1>
+    <p class="muted">Last reviewed {SITE.taxDataReviewed} · {TAX.year} tax year</p>
+    <p>Arizona Form A-4 tells your employer how much Arizona income tax to take from each paycheck. It is a percentage of your gross taxable wages, not a tax bracket.</p>
+
+    <h2>The available rates</h2>
+    <p>You can choose one of these percentages: {TAX.arizona.a4Options.map((r) => (r * 100).toFixed(1) + '%').join(', ')}. You can also ask for an extra flat dollar amount on each paycheck. If you never file an A-4, your employer uses the default of {(TAX.arizona.defaultA4 * 100).toFixed(1)}%.</p>
+
+    <h2>Withholding is not the same as tax owed</h2>
+    <p>Arizona taxes income at a flat {(TAX.arizona.flatRate * 100).toFixed(1)}% after the standard deduction and other adjustments on your return. Because withholding ignores the deduction, a single rate can be too high for low earners and too low for high earners.</p>
+
+    <h2>Which rate should I choose?</h2>
+    <ul>
+      <li>If your pay is modest, the default usually over-withholds slightly, which gives a small refund.</li>
+      <li>If your pay is higher, or you have more than one job, the default may fall short and you could owe at filing time.</li>
+      <li>The <a href="/">calculator</a> shows a note when your chosen rate looks too low and suggests the smallest rate that covers the estimate.</li>
+    </ul>
+
+    <h2>How to change it</h2>
+    <p>Fill in a new Form A-4 and give it to your employer or payroll department. The Arizona Department of Revenue publishes the form on <a href="https://azdor.gov/forms/withholding-forms/arizona-withholding-percentage-election" rel="noopener">azdor.gov</a>. Changes usually start with a following pay period.</p>
+    <p>This page is general information, not tax advice. Confirm details with the Arizona Department of Revenue or a tax professional.</p>
+  </article>
+  <RelatedLinks items={[
+    { href: '/', title: 'Arizona Paycheck Calculator', text: 'Test different A-4 rates.' },
+    { href: '/guides/arizona-paycheck-deductions/', title: 'Paycheck Deductions', text: 'Every item on your pay stub.' },
+    { href: '/methodology/', title: 'Methodology', text: 'How withholding is estimated.' },
+  ]} />
+</BaseLayout>

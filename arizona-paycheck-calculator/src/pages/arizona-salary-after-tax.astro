@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Calculator from '../components/Calculator.astro';
+import Faq from '../components/Faq.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { calculatePaycheck } from '../lib/paycheck.js';
+import { money } from '../lib/format.js';
+import { SITE } from '../config/site.js';
+import { TAX } from '../config/tax.js';
+
+// Example table is computed from the same engine at build time (single filer, standard W-4, 2.0% A-4, no deductions).
+const salaries = [40000, 50000, 60000, 75000, 90000, 100000, 120000, 150000];
+const rows = salaries.map((s) => {
+  const r = calculatePaycheck({ payType: 'salary', salary: s, frequency: 'biweekly', filingStatus: 'single', a4Rate: TAX.arizona.defaultA4 }, TAX);
+  return { s, annual: r.takeHome.annual, monthly: r.takeHome.monthly, biweekly: r.takeHome.biweekly, rate: r.effectiveTaxRate };
+});
+const faqs = [
+  { q: 'How much is a $60,000 salary after tax in Arizona?', a: `For a single filer with a standard W-4, no deductions and the default 2.0% Arizona rate, take-home is about ${money(rows[2].annual)} a year (${money(rows[2].monthly)} a month). Your result will differ with a different filing status, deductions or A-4 rate.` },
+  { q: 'Is Arizona a high-tax state for salaries?', a: 'Arizona uses a flat 2.5% income tax rate, and has no local income tax. Federal tax and payroll taxes make up most of what is withheld.' },
+  { q: 'Do these numbers include 401(k) or insurance?', a: 'The table does not. Use the calculator to add retirement, health and other deductions.' },
+];
+const appSchema = {
+  '@context': 'https://schema.org', '@type': 'WebApplication',
+  name: 'Arizona Salary After Tax Calculator', url: SITE.url + '/arizona-salary-after-tax/',
+  applicationCategory: 'FinanceApplication', operatingSystem: 'Any',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+<BaseLayout
+  title="Arizona Salary After Tax Calculator – Annual and Monthly Take-Home"
+  description="See what your Arizona salary is worth after federal tax, state tax and payroll taxes. Includes a take-home table for common salaries."
+  path="/arizona-salary-after-tax/"
+  crumbs={[{ name: 'Salary After Tax', href: '/arizona-salary-after-tax/' }]}
+  schema={[appSchema]}
+>
+  <section class="hero">
+    <h1>Arizona Salary After Tax Calculator</h1>
+    <p class="lead">Compare job offers or plan a budget. Enter a yearly salary to see annual, monthly, biweekly and weekly take-home pay in Arizona.</p>
+    <span class="badge">{TAX.year} tax year</span>
+  </section>
+  <Calculator mode="salary" />
+  <AdSlot />
+  <div class="content">
+    <h2>Take-home pay for common Arizona salaries</h2>
+    <p>Assumes a single filer, standard Form W-4, the default 2.0% Arizona withholding rate and no deductions.</p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <caption class="vh">Estimated take-home pay by salary</caption>
+      <thead><tr><th scope="col">Salary</th><th scope="col" class="r">Annual</th><th scope="col" class="r">Monthly</th><th scope="col" class="r">Biweekly</th><th scope="col" class="r">Tax rate</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr><th scope="row">{money(r.s)}</th><td class="r">{money(r.annual)}</td><td class="r">{money(r.monthly)}</td><td class="r">{money(r.biweekly)}</td><td class="r">{(r.rate * 100).toFixed(1)}%</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="content">
+    <p class="muted">Tax rate is the share of gross pay taken by federal, Arizona, Social Security and Medicare withholding. Figures are estimates.</p>
+  </div>
+  <Faq items={faqs} />
+  <RelatedLinks items={[
+    { href: '/', title: 'Arizona Paycheck Calculator', text: 'Full calculator with all options.' },
+    { href: '/arizona-hourly-paycheck-calculator/', title: 'Hourly Calculator', text: 'Start from an hourly wage.' },
+    { href: '/methodology/', title: 'Methodology', text: 'How the numbers are built.' },
+  ]} />
+</BaseLayout>

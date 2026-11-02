@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site.js';
+
+export function getStaticPaths() {
+  const modules = import.meta.glob('../../content/blog/*.md', { eager: true });
+  return Object.entries(modules).map(([file, m]) => ({
+    params: { slug: file.split('/').pop().replace(/\.md$/, '') },
+    props: { post: m },
+  }));
+}
+const { post } = Astro.props;
+const { slug } = Astro.params;
+const fm = post.frontmatter;
+const Content = post.Content;
+const path = `/blog/${slug}/`;
+const date = new Date(fm.date).toISOString().slice(0, 10);
+const article = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: fm.title, description: fm.description,
+  datePublished: date, dateModified: fm.updated ? new Date(fm.updated).toISOString().slice(0, 10) : date,
+  mainEntityOfPage: SITE.url + path, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+};
+---
+<BaseLayout title={`${fm.title} – ${SITE.name}`} description={fm.description} path={path} type="article" schema={[article]}
+  crumbs={[{ name: 'Blog', href: '/blog/' }, { name: fm.title, href: path }]}>
+  <article class="content">
+    <h1>{fm.title}</h1>
+    <p class="muted">Published {date}</p>
+    <Content />
+  </article>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import { NAV, SITE } from '../config/site.js';
+const { current = '/' } = Astro.props;
+---
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">Arizona <span>Paycheck</span> Calculator</a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        {NAV.map((n) => (
+          <li><a href={n.href} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,7 @@
+---
+// Ads are OFF until you add real network codes in src/config/site.js and approve it.
+import { SITE } from '../config/site.js';
+---
+{SITE.ads.enabled && SITE.ads.clientId && (
+  <aside class="ad-slot" aria-label="Advertisement"><span>Advertisement</span></aside>
+)}
