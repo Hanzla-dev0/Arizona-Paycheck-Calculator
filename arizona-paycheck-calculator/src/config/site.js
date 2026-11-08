@@ -6,8 +6,7 @@ export const SITE = {
   description:
     'Estimate your Arizona take-home pay after federal tax, Arizona withholding, Social Security and Medicare.',
   // Leave empty until you have a real contact address. The Contact page shows a note while it is empty.
-  contactEmail: '',
-  // Leave empty until you have a real owner/publisher name.
+contactEmail: 'contact@arizonapaycheckcalculator.com',  // Leave empty until you have a real owner/publisher name.
   ownerName: '',
   // Last time tax rules were checked against official sources (YYYY-MM-DD).
   taxDataReviewed: '2026-11-01',
