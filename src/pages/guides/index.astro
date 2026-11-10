@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { GUIDES } from '../../config/guides.js';
+const items = GUIDES.map((g) => ({ href: `/guides/${g.slug}/`, title: g.title, text: g.text }));
+---
+<BaseLayout
+  title="Arizona Paycheck Guides – Withholding, Taxes and Deductions"
+  description="Plain-English guides to Arizona paycheck withholding, Form A-4, payroll taxes and deductions."
+  path="/guides/"
+  crumbs={[{ name: 'Guides', href: '/guides/' }]}
+>
+  <div class="content">
+    <h1>Arizona Paycheck Guides</h1>
+    <p>Short, practical guides that explain what comes out of an Arizona paycheck and why.</p>
+  </div>
+  <RelatedLinks items={items} />
+</BaseLayout>

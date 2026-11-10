@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site.js';
+import { TAX } from '../config/tax.js';
+---
+<BaseLayout
+  title="Methodology and Sources – Arizona Paycheck Calculator"
+  description="How the Arizona Paycheck Calculator estimates federal withholding, Arizona withholding, Social Security and Medicare, with assumptions and official sources."
+  path="/methodology/"
+  crumbs={[{ name: 'Methodology', href: '/methodology/' }]}
+>
+  <article class="content">
+    <h1>Methodology and Sources</h1>
+    <p class="muted">Tax year {TAX.year} · Rules last reviewed {SITE.taxDataReviewed}</p>
+
+    <h2>Steps</h2>
+    <ol>
+      <li><strong>Gross pay.</strong> Salary, or hourly rate × regular hours + 1.5 × rate × overtime hours, × 52 weeks.</li>
+      <li><strong>Pre-tax deductions.</strong> 401(k)/403(b) lowers federal and Arizona wages. Health, dental and HSA amounts lower federal, Arizona and FICA wages.</li>
+      <li><strong>Federal income tax.</strong> IRS Publication 15-T, Worksheet 1A, percentage method for the Form W-4 (2020 and later). Pay is annualized, adjusted for W-4 Steps 2 to 4, run through the {TAX.year} rate schedule, then divided by the pay periods.</li>
+      <li><strong>Arizona withholding.</strong> Gross taxable wages × your Form A-4 percentage, plus any extra amount. Default {(TAX.arizona.defaultA4 * 100).toFixed(1)}%.</li>
+      <li><strong>Social Security and Medicare.</strong> {(TAX.fica.socialSecurityRate * 100).toFixed(1)}% up to ${TAX.fica.socialSecurityWageBase.toLocaleString('en-US')}; {(TAX.fica.medicareRate * 100).toFixed(2)}% Medicare, plus {(TAX.fica.additionalMedicareRate * 100).toFixed(1)}% above ${TAX.fica.additionalMedicareThreshold.toLocaleString('en-US')}.</li>
+      <li><strong>Net pay.</strong> Gross pay minus taxes and deductions.</li>
+    </ol>
+
+    <h2>Withholding versus tax owed</h2>
+    <p>Arizona income tax owed is a flat {(TAX.arizona.flatRate * 100).toFixed(1)}% of taxable income after deductions. Withholding is a percentage of gross wages with no deduction applied. The "heads up" note in the calculator compares the two for a full year.</p>
+
+    <h2>Assumptions</h2>
+    <ul>
+      <li>Your pay and deductions stay the same all year.</li>
+      <li>Social Security and Medicare are figured on annualized wages, so the Social Security limit is spread evenly. Real paychecks stop Social Security when you reach the limit.</li>
+      <li>For the "will I owe" note only, the Arizona standard deduction is assumed to equal the federal amounts for {TAX.year} (${TAX.arizona.standardDeduction.single.toLocaleString('en-US')} single, ${TAX.arizona.standardDeduction.married.toLocaleString('en-US')} married filing jointly, ${TAX.arizona.standardDeduction.hoh.toLocaleString('en-US')} head of household). Verify with the Arizona Department of Revenue. This does not affect withholding amounts.</li>
+      <li>Tips are treated as ordinary wages spread evenly over the year. Overtime is estimated at 1.5 times the hourly rate.</li>
+      <li>The W-4 Step 4(b) amount is taken as you enter it. The calculator does not decide whether you qualify for any deduction or exemption.</li>
+      <li>Not included: bonuses and other supplemental wages, commissions, wage garnishments, part-year employment, several employers at once, nonresident rules, local taxes and complex benefit plans.</li>
+      <li>Optional year-to-date wages switch Social Security and Medicare to a real single-paycheck method (Social Security stops at the yearly limit, and 0.9% extra Medicare starts above $200,000 of wages). Without them, the yearly limits are spread evenly.</li>
+    </ul>
+
+    <h2>Official sources</h2>
+    <ul>
+      <li><a href="https://www.irs.gov/publications/p15t" rel="noopener">IRS Publication 15-T</a></li>
+      <li><a href="https://azdor.gov/individuals/withholding-tax-individual" rel="noopener">Arizona Department of Revenue: Withholding Tax</a></li>
+      <li><a href="https://azdor.gov/individuals/withholding-calculations" rel="noopener">Arizona Withholding Calculations</a></li>
+      <li><a href="https://azdor.gov/forms/withholding-forms/arizona-withholding-percentage-election" rel="noopener">Arizona Form A-4</a></li>
+    </ul>
+    <p>Results are estimates and not professional tax advice. See the <a href="/disclaimer/">disclaimer</a>.</p>
+  </article>
+</BaseLayout>

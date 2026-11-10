@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StateCalculator from '../components/StateCalculator.astro';
+import { STATES } from '../data/states.js';
+const state = STATES.find((s) => s.slug === 'wyoming');
+const name = state.name;
+const title = 'Wyoming Paycheck Calculator';
+const description = 'Estimate your Wyoming take-home pay after federal income tax, Social Security, Medicare and state or local withholding. Compare salary and hourly pay.';
+---
+<BaseLayout title={title + ' | 2026 Take-Home Pay Estimate'} description={description} path="/wyoming-paycheck-calculator/" crumbs={[{name:'Paycheck Calculators by State',href:'/paycheck-calculators-by-state/'},{name:title,href:'/wyoming-paycheck-calculator/'}]}>
+  <section class="hero state-hero">
+    <p class="eyebrow">Wyoming · WY</p>
+    <h1>Wyoming Paycheck Calculator</h1>
+    <p class="lead">Estimate take-home pay for work in Wyoming. Enter your salary or hourly rate, pay schedule, federal withholding details, and an estimated state and local withholding percentage to see an itemized paycheck breakdown.</p>
+    <div class="hero-meta"><span>Free estimate</span><span>Salary and hourly pay</span><span>2026 federal tax framework</span></div>
+  </section>
+  <StateCalculator stateName="Wyoming" stateCode="WY" />
+  <article class="prose state-copy">
+    <h2>How to estimate a Wyoming paycheck</h2>
+    <p>Your take-home pay is the amount left after payroll withholding and deductions. A typical employee paycheck may include federal income tax, Social Security, Medicare, state income tax where applicable, local income tax in some locations, insurance premiums and retirement contributions.</p>
+    <p>Start with gross pay, choose your pay frequency and federal filing status, then enter the state and local withholding percentages that best match your payroll information. If you have a recent pay stub, its state and local withholding amounts can help you estimate an effective percentage. Actual withholding can differ based on state forms, allowances or elections, employer payroll settings and local rules.</p>
+    <h2>Federal taxes and FICA</h2>
+    <p>Most W-2 employees are subject to federal income tax withholding and FICA payroll taxes. Employee Social Security and Medicare are generally withheld separately from state income tax. Social Security applies only up to the annual wage base; Additional Medicare withholding may apply after an employer-paid wage threshold is reached.</p>
+    <h2>{state.wageIncomeTax === 'no-broad-wage-income-tax' ? `${name} state income tax on wages` : `${name} state income tax and withholding`}</h2>
+    {state.wageIncomeTax === 'no-broad-wage-income-tax' ? <p>{name} does not impose a broad state individual income tax on ordinary wage earnings. However, other taxes, special assessments, benefit contributions or local rules may affect some workers. This estimator leaves the state withholding rate at zero by default; review your pay statement and applicable government guidance before assuming no state-related deduction applies.</p> : <p>{name} has a state individual income tax that may affect employee wages. The applicable tax and payroll withholding can depend on filing status, income, deductions, credits, forms and tax-year rules. This estimator does not reproduce the state’s official withholding tables. Enter an effective state withholding percentage based on your pay statement or an official state estimator. Do not treat a zero entry as confirmation that no tax is due.</p>}
+    <p>Some cities, counties or other local jurisdictions may also impose wage taxes or occupational assessments. Enter any applicable local withholding in the separate field. A local rate of zero means no local amount was entered; it is not a legal determination that no local tax applies.</p>
+    <h2>Paycheck deductions to include</h2>
+    <ul><li><strong>Retirement:</strong> traditional 401(k) contributions generally reduce federal income-tax wages but are still subject to Social Security and Medicare.</li><li><strong>Health benefits:</strong> qualifying pre-tax premiums may reduce some taxable wages depending on the plan.</li><li><strong>After-tax deductions:</strong> items such as certain insurance, garnishments or repayments reduce take-home pay after taxes.</li></ul>
+    <h2>How accurate is this Wyoming estimate?</h2>
+    <p>This tool is an educational estimate, not a substitute for an employer payroll calculation or tax return. State and local withholding is based on the percentage you enter, not an automatic calculation from every state and municipal withholding table. For an exact result, compare the estimate with your pay stub and consult the relevant revenue department or a qualified tax professional.</p>
+    <h2>Related paycheck resources</h2>
+    <p>Explore the <a href="/paycheck-calculators-by-state/">paycheck calculators by state</a>, browse <a href="/tax-tools/">tax tools</a>, or read the <a href="/methodology/">calculation methodology</a>. Arizona-specific calculations are available on the <a href="/">Arizona Paycheck Calculator</a>.</p>
+  </article>
+</BaseLayout>

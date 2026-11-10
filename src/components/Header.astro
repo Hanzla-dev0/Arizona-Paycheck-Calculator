@@ -1,0 +1,5 @@
+---
+import { NAV } from '../config/site.js';
+const { current = '/' } = Astro.props;
+---
+<header class="site-header"><div class="wrap header-inner"><a class="brand" href="/" aria-label="Arizona Paycheck Calculator home"><img class="brand-mark" src="/brand-mark.svg" alt="" width="42" height="42" /><span class="brand-name">Arizona <b>Paycheck</b><small>CALCULATOR</small></span></a><nav class="nav" aria-label="Main navigation"><ul>{NAV.map((n)=><li><a href={n.href} aria-current={current===n.href?'page':undefined}>{n.label}</a></li>)}</ul></nav><a class="header-cta" href="/#calc">Calculate pay <span aria-hidden="true">→</span></a></div></header>

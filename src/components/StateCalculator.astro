@@ -1,0 +1,43 @@
+---
+const { stateName, stateCode } = Astro.props;
+---
+<section class="state-calc card" data-state-calculator data-state-name={stateName}>
+  <div class="calc-heading"><div><p class="eyebrow">PAYCHECK ESTIMATOR</p><h2>Calculate your take-home pay</h2><p class="muted">Enter your pay and withholding assumptions. State and local rates are user-entered estimates.</p></div><span class="badge">2026</span></div>
+  <form class="state-form" novalidate>
+    <div class="grid2">
+      <div class="field"><label for="st-pay-type">Pay type</label><select id="st-pay-type"><option value="salary">Annual salary</option><option value="hourly">Hourly wage</option></select></div>
+      <div class="field"><label for="st-pay">Annual salary ($)</label><input id="st-pay" type="number" min="0" value="60000" step="any"></div>
+      <div class="field"><label for="st-rate">Hourly rate ($)</label><input id="st-rate" type="number" min="0" value="25" step="any"></div>
+      <div class="field"><label for="st-hours">Hours per week</label><input id="st-hours" type="number" min="0" max="168" value="40" step="any"></div>
+      <div class="field"><label for="st-ot">Overtime hours per week</label><input id="st-ot" type="number" min="0" max="100" value="0" step="any"></div>
+      <div class="field"><label for="st-tips">Annual tips ($)</label><input id="st-tips" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-frequency">Pay frequency</label><select id="st-frequency"><option value="weekly">Weekly</option><option value="biweekly" selected>Every two weeks</option><option value="semimonthly">Twice a month</option><option value="monthly">Monthly</option></select></div>
+      <div class="field"><label for="st-status">Federal filing status</label><select id="st-status"><option value="single">Single / Married filing separately</option><option value="married">Married filing jointly</option><option value="hoh">Head of household</option></select></div>
+      <div class="field"><label for="st-state-rate">State withholding (%)</label><input id="st-state-rate" type="number" min="0" max="30" value="0" step="0.01"><p class="hint">Enter an effective rate from your pay stub or official state estimate. Zero does not confirm that no tax is due.</p></div>
+      <div class="field"><label for="st-local-rate">Local wage tax (%)</label><input id="st-local-rate" type="number" min="0" max="20" value="0" step="0.01"></div>
+      <div class="field"><label for="st-401k">Traditional 401(k) (% of pay)</label><input id="st-401k" type="number" min="0" max="100" value="0" step="0.1"></div>
+      <div class="field"><label for="st-health">Pre-tax health plan ($ per check)</label><input id="st-health" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-post">After-tax deductions ($ per check)</label><input id="st-post" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-extra">W-4 Step 4(c): extra federal ($ per check)</label><input id="st-extra" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-credits">W-4 Step 3 credits ($ per year)</label><input id="st-credits" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-step4a">W-4 Step 4(a): other income ($ per year)</label><input id="st-step4a" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-step4b">W-4 Step 4(b): deductions ($ per year)</label><input id="st-step4b" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label class="check"><input id="st-step2" type="checkbox"> W-4 Step 2 multiple-jobs box checked</label></div>
+      <div class="field"><label class="check"><input id="st-exempt" type="checkbox"> Claim exempt from federal withholding</label></div>
+      <div class="field"><label for="st-ytd-ss">Year-to-date Social Security wages ($)</label><input id="st-ytd-ss" type="number" min="0" value="0" step="any"></div>
+      <div class="field"><label for="st-ytd-med">Year-to-date Medicare wages ($)</label><input id="st-ytd-med" type="number" min="0" value="0" step="any"></div>
+    </div>
+    <p class="form-actions"><button type="reset" class="btn ghost">Reset</button><button type="button" class="btn" data-calculate-state>Calculate paycheck</button></p>
+  </form>
+  <div class="state-result" aria-live="polite">
+    <p class="muted">Estimated take-home per paycheck</p><p class="state-net" data-state-net>$0.00</p>
+    <div class="bar"><i data-part="net"></i><i data-part="federal"></i><i data-part="fica"></i><i data-part="state"></i><i data-part="local"></i><i data-part="deductions"></i></div>
+    <div class="legend"><span>Take-home</span><span>Federal</span><span>FICA</span><span>State</span><span>Local</span><span>Deductions</span></div>
+    <table><tbody><tr><th>Gross pay</th><td data-out="gross"></td></tr><tr><th>Federal income tax estimate</th><td data-out="federal"></td></tr><tr><th>Social Security</th><td data-out="ss"></td></tr><tr><th>Medicare</th><td data-out="medicare"></td></tr><tr><th>State withholding estimate</th><td data-out="state"></td></tr><tr><th>Local withholding estimate</th><td data-out="local"></td></tr><tr><th>Pre-tax deductions</th><td data-out="pretax"></td></tr><tr><th>After-tax deductions</th><td data-out="post"></td></tr><tr class="total"><th>Estimated take-home</th><td data-out="net"></td></tr></tbody></table>
+    <p class="notice">Important: This multi-state estimator uses a simplified federal estimate and the state/local percentages you enter. It does not reproduce each state's official withholding tables, credits, local rules or every payroll exception. Verify with your employer or state revenue department.</p>
+  </div>
+</section>
+<script>
+  import { initStateCalculators } from '../scripts/state-calculator.js';
+  initStateCalculators();
+</script>

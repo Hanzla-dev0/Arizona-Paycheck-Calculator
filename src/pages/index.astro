@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Calculator from '../components/Calculator.astro';
+import Faq from '../components/Faq.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { SITE } from '../config/site.js';
+import { TAX } from '../config/tax.js';
+
+const faqs = [
+  { q: 'How does the Arizona paycheck calculator work?', a: 'It takes your gross pay, subtracts pre-tax deductions, then estimates federal income tax withholding (IRS Publication 15-T percentage method), Arizona withholding (your Form A-4 percentage), Social Security and Medicare. What is left is your estimated take-home pay.' },
+  { q: 'How much Arizona income tax is taken out of my paycheck?', a: 'Your employer withholds the percentage you chose on Arizona Form A-4 from your gross taxable wages. If you never filed an A-4, the default is 2.0%. You can pick 0.5%, 1.0%, 1.5%, 2.0%, 2.5%, 3.0% or 3.5%.' },
+  { q: 'Is the withholding the same as the Arizona tax I owe?', a: 'No. Arizona tax owed at filing time is a flat 2.5% of taxable income after deductions. Withholding is only a prepayment, so you may get a refund or owe a balance when you file.' },
+  { q: 'Does Arizona have local or city income tax?', a: 'No. Arizona cities do not charge a local income tax on wages, so this calculator only includes federal tax, Arizona state withholding, Social Security and Medicare.' },
+  { q: 'Why is my real paycheck different from the estimate?', a: 'Common reasons are bonuses, benefit plans not entered here, wage garnishments, different W-4 or A-4 choices, or your employer rounding differently. Treat the result as an estimate and check your pay stub.' },
+];
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: SITE.name,
+  url: SITE.url + '/',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Any',
+  description: SITE.description,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+<BaseLayout
+  title="Arizona Paycheck Calculator 2026 – Estimate Take-Home Pay"
+  description="Use the free Arizona Paycheck Calculator to estimate 2026 take-home pay for salary or hourly work after federal income tax, Arizona withholding, Social Security and Medicare."
+  path="/"
+  schema={[appSchema]}
+>
+  <section class="hero">
+    <h1>Arizona Paycheck Calculator</h1>
+    <p class="lead">Use this Arizona Paycheck Calculator to estimate your 2026 take-home pay. Enter salary or hourly wages, pay frequency, W-4 details and deductions to see estimated federal income tax, Arizona withholding, Social Security, Medicare and net pay.</p>
+    <div class="home-hero-actions"><a class="btn" href="#calc">Estimate my paycheck <span aria-hidden="true">→</span></a><a class="btn ghost" href="/tax-tools/">Explore tax tools</a></div>
+    <div class="hero-meta"><span>{TAX.year} tax-year estimate</span><span>Salary &amp; hourly pay</span><span>Federal + Arizona + FICA</span></div>
+  </section>
+  <section class="home-benefits" aria-label="Calculator highlights">
+    <div><strong>01</strong><b>Understand your deductions</b><span>See estimated federal, state and payroll taxes.</span></div>
+    <div><strong>02</strong><b>Compare pay schedules</b><span>View take-home pay by common pay frequency.</span></div>
+    <div><strong>03</strong><b>Plan with confidence</b><span>Explore guides, assumptions and related tools.</span></div>
+  </section>
+
+  <Calculator mode="salary" />
+  <AdSlot />
+
+  <div class="content">
+    <h2>What comes out of an Arizona paycheck</h2>
+    <ul>
+      <li><strong>Federal income tax:</strong> based on your Form W-4, filing status and pay.</li>
+      <li><strong>Arizona income tax:</strong> the percentage on your <a href="/guides/arizona-form-a-4-withholding/">Form A-4</a> (default 2.0%).</li>
+      <li><strong>Social Security:</strong> 6.2% of wages up to ${TAX.fica.socialSecurityWageBase.toLocaleString('en-US')} in {TAX.year}.</li>
+      <li><strong>Medicare:</strong> 1.45% of all wages, plus 0.9% on wages above $200,000.</li>
+      <li><strong>Optional deductions:</strong> retirement, health insurance and other items you choose. See the <a href="/guides/arizona-paycheck-deductions/">deductions guide</a>.</li>
+    </ul>
+    <p>Arizona has no city income tax and no state disability insurance payroll tax, so the list above covers the main taxes on a typical check.</p>
+
+    <h2>How to use the calculator</h2>
+    <ol>
+      <li>Choose <em>Salary</em> or <em>Hourly</em> and enter your pay.</li>
+      <li>Pick how often you are paid and your W-4 filing status.</li>
+      <li>Add retirement or insurance deductions if you have them.</li>
+      <li>Open <em>Advanced withholding options</em> to match your W-4 and A-4 choices.</li>
+    </ol>
+    <p>Prefer a focused version? Try the <a href="/arizona-hourly-paycheck-calculator/">hourly paycheck calculator</a> with overtime, or see <a href="/arizona-salary-after-tax/">what a salary is worth after tax</a>.</p>
+  </div>
+
+
+  <section class="content home-expanded">
+    <h2>Plan your Arizona take-home pay with more detail</h2>
+    <p>An annual salary does not tell the whole story of what reaches your bank account. Your paycheck can reflect federal income tax withholding, an Arizona Form A-4 election, Social Security and Medicare taxes, retirement contributions, health coverage and other deductions. This Arizona Paycheck Calculator brings the main items together in one estimate so you can compare pay schedules and understand how common payroll choices affect net pay.</p>
+    <p>Use the calculator with information from your latest pay statement when possible. If you are starting a new job, review your federal Form W-4 and Arizona withholding election with your employer. A withholding estimate is not the same as a final tax return calculation, and a lower withholding amount does not necessarily mean a lower tax bill.</p>
+    <h2>Explore paycheck calculators and tax tools</h2>
+    <p>Comparing jobs in another state? Browse our <a href="/paycheck-calculators-by-state/">paycheck calculators by state</a> for all 50 states and the District of Columbia. Need a focused estimate? Visit the <a href="/tax-tools/">tax tools directory</a> for overtime, bonus, 1099 income, quarterly estimated tax, effective tax rate and withholding estimators.</p>
+    <h2>Arizona paycheck topics</h2>
+    <ul>
+      <li><a href="/arizona-hourly-paycheck-calculator/">Arizona hourly paycheck calculator:</a> estimate pay from hourly wages and overtime.</li>
+      <li><a href="/arizona-salary-after-tax/">Arizona salary after tax:</a> compare annual salary with estimated take-home pay.</li>
+      <li><a href="/guides/arizona-form-a-4-withholding/">Arizona Form A-4 withholding guide:</a> understand state withholding elections.</li>
+      <li><a href="/guides/arizona-paycheck-deductions/">Arizona paycheck deductions:</a> learn how retirement and benefit deductions affect wages.</li>
+      <li><a href="/methodology/">Calculation methodology:</a> review formulas, assumptions and tax-year sources.</li>
+    </ul>
+    <h2>Use estimates thoughtfully</h2>
+    <p>Payroll results can vary with employer-specific settings, bonuses, tips, commissions, local taxes, benefit plan treatment and year-to-date wages. This calculator is designed for education and planning, not as a guarantee of your next deposit. Check official IRS and Arizona Department of Revenue guidance for current rules, and compare the estimate with your actual pay stub.</p>
+  </section>
+
+  <section class="home-explore">
+    <div><p class="eyebrow">MORE WAYS TO PLAN</p><h2>One place for paycheck questions</h2><p>Estimate your Arizona paycheck, explore other states, or use a focused calculator for a specific pay situation.</p></div>
+    <div class="home-explore-grid">
+      <a href="/paycheck-calculators-by-state/"><span>US</span><b>All 50 states + DC</b><small>Compare state paycheck estimates</small></a>
+      <a href="/tax-tools/"><span>∑</span><b>Tax calculators &amp; tools</b><small>Bonus, overtime, 1099 and more</small></a>
+      <a href="/blog/"><span>↗</span><b>Paycheck learning center</b><small>Plain-language tax explainers</small></a>
+    </div>
+  </section>
+  <Faq items={faqs} />
+  <RelatedLinks items={[
+    { href: '/arizona-hourly-paycheck-calculator/', title: 'Hourly Paycheck Calculator', text: 'Hourly wage with overtime.' },
+    { href: '/arizona-salary-after-tax/', title: 'Salary After Tax', text: 'Annual, monthly and biweekly take-home.' },
+    { href: '/guides/arizona-form-a-4-withholding/', title: 'Form A-4 Guide', text: 'Choose your Arizona withholding rate.' },
+    { href: '/methodology/', title: 'Methodology', text: 'Formulas, assumptions and sources.' },
+    { href: '/paycheck-calculators-by-state/', title: 'Paycheck Calculators by State', text: 'Browse all 50 states and Washington, DC.' },
+    { href: '/tax-tools/', title: 'Tax Tools', text: 'Explore overtime, bonus and withholding estimators.' },
+  ]} />
+</BaseLayout>

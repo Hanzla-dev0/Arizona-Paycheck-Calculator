@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TaxTool from '../../components/TaxTool.astro';
+---
+<BaseLayout title="Tax Withholding Calculator | Free Estimate" description="Estimate a per-paycheck withholding amount using an effective tax rate." path="/tax-tools/tax-withholding-calculator/" crumbs={[{name:'Tax Tools',href:'/tax-tools/'},{name:'Tax Withholding Calculator',href:'/tax-tools/tax-withholding-calculator/'}]}>
+<section class="hero"><p class="eyebrow">TAX TOOLS</p><h1>Tax Withholding Calculator</h1><p class="lead">Estimate a per-paycheck withholding amount using an effective tax rate.</p></section>
+<TaxTool kind="withholding" heading="Tax Withholding Calculator" />
+<article class="prose"><h2>How this estimate works</h2><p>Use your W-4 and state withholding forms for a more complete payroll estimate.</p><h2>What can change your result?</h2><p>Your filing status, total annual income, deductions, credits, other jobs, employer withholding method and state or local tax rules can change the final amount. The inputs on this page are intentionally simplified; they do not represent every IRS or state calculation rule.</p><h2>Related resources</h2><p>Explore more <a href="/tax-tools/">tax calculators</a>, compare <a href="/paycheck-calculators-by-state/">paycheck calculators by state</a>, or review our <a href="/methodology/">methodology and sources</a>.</p></article>
+</BaseLayout>

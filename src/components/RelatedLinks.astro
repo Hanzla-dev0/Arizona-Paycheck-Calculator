@@ -1,0 +1,9 @@
+---
+const { items = [] } = Astro.props;
+---
+<section aria-labelledby="rel-h">
+  <h2 id="rel-h">Related tools and guides</h2>
+  <ul class="related">
+    {items.map((i) => <li><a href={i.href}><strong>{i.title}</strong><span>{i.text}</span></a></li>)}
+  </ul>
+</section>

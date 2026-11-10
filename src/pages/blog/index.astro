@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const modules = import.meta.glob('../../content/blog/*.md', { eager: true });
+const posts = Object.entries(modules).map(([file, mod]) => {
+  const slug = file.split('/').pop().replace(/\.md$/, '');
+  return { slug, title: mod.frontmatter?.title ?? slug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' '), description: mod.frontmatter?.description ?? 'A practical guide to paychecks and taxes.', date: mod.frontmatter?.pubDate ?? mod.frontmatter?.date ?? '' };
+}).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+---
+<BaseLayout title="Paycheck & Tax Guides Blog | Arizona Paycheck Calculator" description="Practical articles about paycheck withholding, taxes, deductions, job offers and take-home pay." path="/blog/">
+<section class="hero"><p class="eyebrow">ARTICLES & EXPLAINERS</p><h1>Paycheck &amp; Tax Guides</h1><p class="lead">Clear, practical reading to help you understand payroll taxes, withholding choices and take-home pay.</p></section>
+<div class="tool-grid">{posts.map((p) => <a class="tool-card" href={`/blog/${p.slug}/`}><span class="tool-icon">↗</span><h2>{p.title}</h2><p>{p.description}</p><b>Read article →</b></a>)}</div>
+</BaseLayout>

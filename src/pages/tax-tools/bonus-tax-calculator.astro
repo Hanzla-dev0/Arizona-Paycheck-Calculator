@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TaxTool from '../../components/TaxTool.astro';
+---
+<BaseLayout title="Bonus Tax Calculator | Free Estimate" description="Estimate withholding on a one-time bonus using an assumed supplemental withholding rate." path="/tax-tools/bonus-tax-calculator/" crumbs={[{name:'Tax Tools',href:'/tax-tools/'},{name:'Bonus Tax Calculator',href:'/tax-tools/bonus-tax-calculator/'}]}>
+<section class="hero"><p class="eyebrow">TAX TOOLS</p><h1>Bonus Tax Calculator</h1><p class="lead">Estimate withholding on a one-time bonus using an assumed supplemental withholding rate.</p></section>
+<TaxTool kind="bonus" heading="Bonus Tax Calculator" />
+<article class="prose"><h2>How this estimate works</h2><p>Bonus withholding is not necessarily the final tax on the bonus. Your annual tax return reconciles total income and payments.</p><h2>What can change your result?</h2><p>Your filing status, total annual income, deductions, credits, other jobs, employer withholding method and state or local tax rules can change the final amount. The inputs on this page are intentionally simplified; they do not represent every IRS or state calculation rule.</p><h2>Related resources</h2><p>Explore more <a href="/tax-tools/">tax calculators</a>, compare <a href="/paycheck-calculators-by-state/">paycheck calculators by state</a>, or review our <a href="/methodology/">methodology and sources</a>.</p></article>
+</BaseLayout>
